@@ -1,0 +1,127 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+struct listNode
+{
+  int data;
+  struct listNode *link;
+
+};
+struct listNode *first = NULL,*last = NULL, *temp = NULL,*linkHolder=NULL;
+int n;
+void display()
+{
+   temp = first;
+   printf("\nYour linked list is: ");
+   while(temp!=NULL)
+    {
+      printf(" ");
+      printf("%d",temp->data);
+      temp = temp->link;
+    }
+}
+void insert()
+{
+  if(first == NULL)
+  {
+    first = temp;
+    last = first;
+  }
+  else{
+    last->link=temp;
+    last=temp;
+  }
+}
+void create()
+{
+  printf("\nENter the size of linked list: ");
+  scanf("%d",&n);
+  int i;
+  
+  for(i =0; i<n; i++)
+  {
+    temp = (struct listNode*) malloc (sizeof(struct listNode));
+    printf("\nEnter a number: ");
+    scanf("%d",&temp->data);
+    temp->link = NULL;
+    insert();
+  }
+  
+}
+void insertAfter()
+{
+  temp = first;
+  int x;
+  printf("\nEnter the indice of node x: ");
+  scanf("%d",&x);
+  //printf("Inserting");
+  if(x >= n)
+      {
+      printf("\nCan not insert!");
+      return;
+      }
+  
+  int i=0;
+   while(i<=x-1)
+    { 
+      temp = temp->link;
+      i++;
+    }
+    struct listNode *newVal = (struct listNode*) malloc (sizeof(struct listNode));
+    printf("\nEnter the value to be inserted: ");
+    scanf("%d",&newVal->data);
+    linkHolder = temp->link;
+    temp->link = newVal;
+    newVal->link = linkHolder;
+    n+=1;
+}
+void deleteAfter()
+{
+  temp = first;
+  int trail;
+  printf("\nEnter the indice of node trail: ");
+  scanf("%d",&trail);
+  if(trail >= n)
+      {
+      printf("\nCan not delete!");
+      return;
+      }
+  
+  int i=0;
+   while(i<=trail-1)
+    { 
+      temp = temp->link;
+      i++;
+    }
+    linkHolder = temp->link;
+    temp->link = (temp->link)->link;
+    temp = temp->link;
+    
+    
+}
+int main()
+{ int opt;
+  while(1)
+  {
+    printf("\n____MENU____");
+    printf("\n\t1. Create\n\t2. Display\n\t3. Insert\n\t4. Delete\n\t5. Exit");
+    printf("\nEnter your choice: ");
+    scanf("%d",&opt);
+    switch(opt)
+    {
+      case 1: create();
+      break;
+      case 2: display();
+      break;
+      case 3: insertAfter();
+      break;
+      case 4: deleteAfter();
+      break;
+      case 5: exit(0);
+      default: printf("\nInvalid choice try again.");
+      break;
+    }
+
+  }
+  
+}
